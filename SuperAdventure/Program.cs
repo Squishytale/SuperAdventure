@@ -4,7 +4,7 @@ namespace SuperAdventure
     {
         /// <summary>
         ///  The main entry point for the application.
-        /// </summary>
+        /// </summary> test
         [STAThread]
         static void Main()
         {
