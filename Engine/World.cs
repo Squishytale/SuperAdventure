@@ -13,8 +13,6 @@ namespace Engine
         public static readonly List<Quest> Quests = new List<Quest>();
         public static readonly List<Location> Locations = new List<Location>();
 
-        public const int ITEM_ID_FIREBALL = 13;
-        public const int ITEM_ID_GREAT_AXE = 12;
         public const int ITEM_ID_RUSTY_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
         public const int ITEM_ID_PIECE_OF_FUR = 3;
@@ -26,7 +24,8 @@ namespace Engine
         public const int ITEM_ID_SPIDER_SILK = 9;
         public const int ITEM_ID_ADVENTURER_PASS = 10;
         public const int ITEM_ID_SQUISH = 11;
-        
+        public const int ITEM_ID_GREAT_AXE = 12;
+        public const int ITEM_ID_FIREBALL = 13;
 
         public const int MONSTER_ID_RAT = 1;
         public const int MONSTER_ID_SNAKE = 2;
@@ -62,7 +61,7 @@ namespace Engine
         {
             Items.Add(new Weapon (ITEM_ID_FIREBALL, "Fireball", "FireballS", 50, 100));
             Items.Add(new Weapon(ITEM_ID_GREAT_AXE, "Great Axe", "Great Axes", 5, 25));
-            Items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5));
+            Items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty swords", 15, 50));
             Items.Add(new Item(ITEM_ID_RAT_TAIL, "Rat tail", "Rat tails"));
             Items.Add(new Item(ITEM_ID_PIECE_OF_FUR, "Piece of fur", "Pieces of fur"));
             Items.Add(new Item(ITEM_ID_SNAKE_FANG, "Snake fang", "Snake fangs"));
@@ -138,6 +137,7 @@ namespace Engine
 
             Quests.Add(clearAlchemistGarden);
             Quests.Add(clearFarmersField);
+            Quests.Add(clearSwamp);
         }
 
         private static void PopulateLocations()
