@@ -49,6 +49,8 @@
             rtbMessages = new RichTextBox();
             dgvInventory = new DataGridView();
             dgvQuests = new DataGridView();
+            label6 = new Label();
+            lblStone = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvQuests).BeginInit();
             SuspendLayout();
@@ -255,11 +257,30 @@
             dgvQuests.Size = new Size(312, 189);
             dgvQuests.TabIndex = 21;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(164, 20);
+            label6.Name = "label6";
+            label6.Size = new Size(40, 15);
+            label6.TabIndex = 22;
+            label6.Text = "Stone:";
+            // 
+            // lblStone
+            // 
+            lblStone.AutoSize = true;
+            lblStone.Location = new Point(230, 21);
+            lblStone.Name = "lblStone";
+            lblStone.Size = new Size(0, 15);
+            lblStone.TabIndex = 23;
+            // 
             // SuperAdventure
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(719, 651);
+            Controls.Add(lblStone);
+            Controls.Add(label6);
             Controls.Add(dgvQuests);
             Controls.Add(dgvInventory);
             Controls.Add(rtbMessages);
@@ -312,5 +333,7 @@
         private RichTextBox rtbMessages;
         private DataGridView dgvInventory;
         private DataGridView dgvQuests;
+        private Label label6;
+        private Label lblStone;
     }
 }

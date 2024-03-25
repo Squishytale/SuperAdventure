@@ -13,6 +13,8 @@ namespace Engine
         public static readonly List<Quest> Quests = new List<Quest>();
         public static readonly List<Location> Locations = new List<Location>();
 
+        public const int ITEM_ID_FIREBALL = 13;
+        public const int ITEM_ID_GREAT_AXE = 12;
         public const int ITEM_ID_RUSTY_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
         public const int ITEM_ID_PIECE_OF_FUR = 3;
@@ -23,13 +25,19 @@ namespace Engine
         public const int ITEM_ID_SPIDER_FANG = 8;
         public const int ITEM_ID_SPIDER_SILK = 9;
         public const int ITEM_ID_ADVENTURER_PASS = 10;
+        public const int ITEM_ID_SQUISH = 11;
+        
 
         public const int MONSTER_ID_RAT = 1;
         public const int MONSTER_ID_SNAKE = 2;
         public const int MONSTER_ID_GIANT_SPIDER = 3;
+        public const int MONSTER_ID_ZOMBIE = 4;
+        public const int MONSTER_ID_SLIMES = 5;
+
 
         public const int QUEST_ID_CLEAR_ALCHEMIST_GARDEN = 1;
         public const int QUEST_ID_CLEAR_FARMERS_FIELD = 2;
+        public const int QUEST_ID_CLEAR_SWAMP = 3;
 
         public const int LOCATION_ID_HOME = 1;
         public const int LOCATION_ID_TOWN_SQUARE = 2;
@@ -40,6 +48,7 @@ namespace Engine
         public const int LOCATION_ID_FARM_FIELD = 7;
         public const int LOCATION_ID_BRIDGE = 8;
         public const int LOCATION_ID_SPIDER_FIELD = 9;
+        public const int LOCATION_ID_SWAMP = 10;
 
         static World()
         {
@@ -51,6 +60,8 @@ namespace Engine
 
         private static void PopulateItems()
         {
+            Items.Add(new Weapon (ITEM_ID_FIREBALL, "Fireball", "FireballS", 50, 100));
+            Items.Add(new Weapon(ITEM_ID_GREAT_AXE, "Great Axe", "Great Axes", 5, 25));
             Items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty swords", 0, 5));
             Items.Add(new Item(ITEM_ID_RAT_TAIL, "Rat tail", "Rat tails"));
             Items.Add(new Item(ITEM_ID_PIECE_OF_FUR, "Piece of fur", "Pieces of fur"));
@@ -61,11 +72,15 @@ namespace Engine
             Items.Add(new Item(ITEM_ID_SPIDER_FANG, "Spider fang", "Spider fangs"));
             Items.Add(new Item(ITEM_ID_SPIDER_SILK, "Spider silk", "Spider silks"));
             Items.Add(new Item(ITEM_ID_ADVENTURER_PASS, "Adventurer pass", "Adventurer passes"));
+            Items.Add(new Item(ITEM_ID_SQUISH, "One Squish", "Squishies"));
         }
 
         private static void PopulateMonsters()
         {
-            Monster rat = new Monster(MONSTER_ID_RAT, "Rat", 5, 3, 10, 3, 3);
+
+
+
+            Monster rat = new Monster(MONSTER_ID_RAT, "Rat", 5, 3, 10, 1000, 1000);
             rat.LootTable.Add(new LootItem(ItemByID(ITEM_ID_RAT_TAIL), 75, false));
             rat.LootTable.Add(new LootItem(ItemByID(ITEM_ID_PIECE_OF_FUR), 75, true));
 
@@ -77,13 +92,30 @@ namespace Engine
             giantSpider.LootTable.Add(new LootItem(ItemByID(ITEM_ID_SPIDER_FANG), 75, true));
             giantSpider.LootTable.Add(new LootItem(ItemByID(ITEM_ID_SPIDER_SILK), 25, false));
 
+
+            Monster slime = new Monster(MONSTER_ID_SLIMES, "Slime",  15, 20, 50, 30, 50);
+            slime.LootTable.Add(new LootItem(ItemByID(ITEM_ID_SQUISH), 75, true));
+
             Monsters.Add(rat);
             Monsters.Add(snake);
             Monsters.Add(giantSpider);
+            Monsters.Add(slime);
         }
 
         private static void PopulateQuests()
         {
+
+            Quest clearSwamp =
+                new Quest(
+                    QUEST_ID_CLEAR_SWAMP,
+                    "Clear the swamp",
+                    "Kill the evil Slimes to recieve 5 squish and a Great Axe.", 20, 10);
+
+            clearSwamp.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_SQUISH), 3));
+
+            clearSwamp.RewardItem = ItemByID(ITEM_ID_GREAT_AXE);
+
+
             Quest clearAlchemistGarden =
                 new Quest(
                     QUEST_ID_CLEAR_ALCHEMIST_GARDEN,
@@ -111,6 +143,12 @@ namespace Engine
         private static void PopulateLocations()
         {
             // Create each location
+
+            Location swamp = new Location(LOCATION_ID_SWAMP, "Swamp", "A dark smelly swamp with lots of squishy sounds.");
+            swamp.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_SWAMP);
+            swamp.MonsterLivingHere = MonsterByID(MONSTER_ID_SLIMES);
+
+
             Location home = new Location(LOCATION_ID_HOME, "Home", "Your house. You really need to clean up the place.");
 
             Location townSquare = new Location(LOCATION_ID_TOWN_SQUARE, "Town square", "You see a fountain.");
@@ -146,6 +184,9 @@ namespace Engine
             farmhouse.LocationToWest = farmersField;
 
             farmersField.LocationToEast = farmhouse;
+            farmhouse.LocationToWest = swamp;
+
+            swamp.LocationToEast = farmersField;
 
             alchemistHut.LocationToSouth = townSquare;
             alchemistHut.LocationToNorth = alchemistsGarden;
@@ -170,6 +211,7 @@ namespace Engine
             Locations.Add(farmersField);
             Locations.Add(bridge);
             Locations.Add(spiderField);
+            Locations.Add(swamp);
         }
 
         public static Item ItemByID(int id)
