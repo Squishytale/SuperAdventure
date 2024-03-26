@@ -157,9 +157,10 @@ namespace SuperAdventure
                     // The player does not already have the quest
 
                     // Display the messages
-                    rtbMessages.Text += "You receive the " + newLocation.QuestAvailableHere.Name + " quest." + Environment.NewLine;
+                    rtbMessages.Text += Environment.NewLine + "You receive the " + newLocation.QuestAvailableHere.Name + " quest." + Environment.NewLine + Environment.NewLine;
+
                     rtbMessages.Text += newLocation.QuestAvailableHere.Description + Environment.NewLine;
-                    rtbMessages.Text += "To complete it, return with:" + Environment.NewLine;
+                    rtbMessages.Text += Environment.NewLine + "To complete it, return with:" + Environment.NewLine;
                     ScrollToBottomOfMessages();
                     foreach (QuestCompletionItem qci in newLocation.QuestAvailableHere.QuestCompletionItems)
                     {
@@ -513,10 +514,12 @@ namespace SuperAdventure
             File.WriteAllText(PLAYER_DATA_FILE_NAME, _player.ToXmlString());
         }
 
+
+
         private void buyBoneSword_Click(object sender, EventArgs e)
         {
             // loop through each item in the players inventory
-            foreach (InventoryItem ii in _player.Inventory)
+            foreach (InventoryItem ii in _player.Inventory.ToList())
             {
                 // check to see if the user has bones in their inventory
                 if (ii.Details.ID == 14)
@@ -529,19 +532,52 @@ namespace SuperAdventure
                         // give the player a bone sword
                         _player.AddItemToInventory((World.ItemByID(15)));
 
-                    } 
+                    }
                     else
                     {
                         // tell the user that they dont have enough bones
                         rtbMessages.Text += "You only have " + ii.Quantity + " bones. You need 5 bones to craft the bone sword." + Environment.NewLine;
                         ScrollToBottomOfMessages();
-                        
+
                     }
-                    
+
                 }
             }
+            // update inventory list
             UpdateInventoryListInUI();
 
+        }
+
+        private void craftFireSword_Click(object sender, EventArgs e)
+        {
+            // loop through each item in the players inventory
+            foreach (InventoryItem ii in _player.Inventory.ToList())
+            {
+                // check to see if the user has a fire rune in their inventory
+                if (ii.Details.ID == 16)
+                {
+                    // check to see if the user has 1 fire rune
+                    if (ii.Quantity >= 1)
+                    {
+                        
+                        // give the player a fire sword
+                        _player.AddItemToInventory((World.ItemByID(18)));
+                        // remove 1 fire rune from the player
+                        ii.Quantity -= 1;
+
+                    }
+                    else
+                    {
+                        // tell the user that they dont have enough bones
+                        rtbMessages.Text += "You have no runes. You need 1 fire rune to craft the fire sword." + Environment.NewLine;
+                        ScrollToBottomOfMessages();
+
+                    }
+
+                }
+            }
+            // update inventory list
+            UpdateInventoryListInUI();
         }
     }
 }

@@ -28,6 +28,9 @@ namespace Engine
         public const int ITEM_ID_FIREBALL = 13;
         public const int ITEM_ID_BONE = 14;
         public const int ITEM_ID_BONE_SWORD = 15;
+        public const int ITEM_ID_FIRE_RUNE = 16;
+        public const int ITEM_ID_GOBLIN_HEAD = 17;
+        public const int ITEM_ID_FIRE_SWORD = 18;
 
 
 
@@ -37,14 +40,16 @@ namespace Engine
         public const int MONSTER_ID_ZOMBIE = 4;
         public const int MONSTER_ID_SLIMES = 5;
         public const int MONSTER_ID_SKELETON = 6;
+        public const int MONSTER_ID_GOBLIN = 7;
 
 
         public const int QUEST_ID_CLEAR_ALCHEMIST_GARDEN = 1;
         public const int QUEST_ID_CLEAR_FARMERS_FIELD = 2;
         public const int QUEST_ID_CLEAR_SWAMP = 3;
+        public const int QUEST_ID_CLEAR_FOREST = 4;
 
         public const int LOCATION_ID_START_CAVE = 1;
-        public const int LOCATION_ID_TOWN_SQUARE = 2;
+        public const int LOCATION_ID_FOREST = 2;
         public const int LOCATION_ID_GUARD_POST = 3;
         public const int LOCATION_ID_ALCHEMIST_HUT = 4;
         public const int LOCATION_ID_ALCHEMISTS_GARDEN = 5;
@@ -53,6 +58,7 @@ namespace Engine
         public const int LOCATION_ID_BRIDGE = 8;
         public const int LOCATION_ID_SPIDER_FIELD = 9;
         public const int LOCATION_ID_SWAMP = 10;
+        
 
         static World()
         {
@@ -64,7 +70,7 @@ namespace Engine
 
         private static void PopulateItems()
         {
-            Items.Add(new Weapon (ITEM_ID_FIREBALL, "Fireball", "Fireballs", 50, 100));
+            Items.Add(new Weapon(ITEM_ID_FIREBALL, "Fireball", "Fireballs", 50, 100));
             Items.Add(new Weapon(ITEM_ID_GREAT_AXE, "Great Axe", "Great Axes", 5, 25));
             Items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty swords", 15, 50));
             Items.Add(new Item(ITEM_ID_RAT_TAIL, "Rat tail", "Rat tails"));
@@ -79,11 +85,17 @@ namespace Engine
             Items.Add(new Item(ITEM_ID_SQUISH, "One Squish", "Squishies"));
             Items.Add(new Item(ITEM_ID_BONE, "Bone", "Bones"));
             Items.Add(new Weapon(ITEM_ID_BONE_SWORD, "Bone Sword", "Bone Swords", 50, 100));
+            Items.Add(new Item(ITEM_ID_FIRE_RUNE, "Fire Rune", "Fire Runes"));
+            Items.Add(new Item(ITEM_ID_GOBLIN_HEAD, "Goblin Head", "Goblin Heads"));
+            Items.Add(new Weapon(ITEM_ID_FIRE_SWORD, "Fire Sword", "Fire Swords", 50, 100));
+
 
         }
 
         private static void PopulateMonsters()
         {
+            Monster goblin = new Monster(MONSTER_ID_GOBLIN, "Goblin", 5, 3, 10, 10, 10);
+            goblin.LootTable.Add(new LootItem(ItemByID(ITEM_ID_GOBLIN_HEAD), 100, false));
 
             Monster skeleton = new Monster(MONSTER_ID_SKELETON, "Skeleton", 5, 3, 10, 10, 10);
             skeleton.LootTable.Add(new LootItem(ItemByID(ITEM_ID_BONE), 75, false));
@@ -109,10 +121,26 @@ namespace Engine
             Monsters.Add(giantSpider);
             Monsters.Add(slime);
             Monsters.Add(skeleton);
+            Monsters.Add(goblin);
         }
 
         private static void PopulateQuests()
         {
+
+            // Give quest at cave to kill 5 goblins
+            Quest clearForest =
+                new Quest(
+                    QUEST_ID_CLEAR_FOREST,
+                    "Clear the forest",
+                    "Please help traveller. The way through the forest is filled with goblins. Please kill 5 of them so I can escape.", 100, 100);
+
+
+            clearForest.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_GOBLIN_HEAD), 5));
+
+            clearForest.RewardItem = ItemByID(ITEM_ID_FIRE_RUNE);
+
+
+
 
             Quest clearSwamp =
                 new Quest(
@@ -148,6 +176,7 @@ namespace Engine
             Quests.Add(clearAlchemistGarden);
             Quests.Add(clearFarmersField);
             Quests.Add(clearSwamp);
+            Quests.Add(clearForest);
         }
 
         private static void PopulateLocations()
@@ -156,13 +185,14 @@ namespace Engine
 
             Location startLocation = new Location(LOCATION_ID_START_CAVE, "A Dark Cave", "A dark room with anicient glowing runes. One red, one blue and one green.");
             startLocation.MonsterLivingHere = MonsterByID(MONSTER_ID_SKELETON);
+            startLocation.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_FOREST);
+
+            Location forest = new Location(LOCATION_ID_FOREST, "An Enchanted Forest", "You hear birds chirping and leaves rustling.");
+            forest.MonsterLivingHere = MonsterByID(MONSTER_ID_GOBLIN);
 
             Location swamp = new Location(LOCATION_ID_SWAMP, "Swamp", "A dark smelly swamp with lots of squishy sounds.");
             swamp.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_SWAMP);
             swamp.MonsterLivingHere = MonsterByID(MONSTER_ID_SLIMES);
-
-
-            Location townSquare = new Location(LOCATION_ID_TOWN_SQUARE, "Town square", "You see a fountain.");
 
             Location alchemistHut = new Location(LOCATION_ID_ALCHEMIST_HUT, "Alchemist's hut", "There are many strange plants on the shelves.");
             alchemistHut.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_ALCHEMIST_GARDEN);
@@ -184,14 +214,14 @@ namespace Engine
             spiderField.MonsterLivingHere = MonsterByID(MONSTER_ID_GIANT_SPIDER);
 
             // Link the locations together
-            startLocation.LocationToNorth = townSquare;
+            startLocation.LocationToNorth = forest;
 
-            townSquare.LocationToNorth = alchemistHut;
-            townSquare.LocationToSouth = startLocation;
-            townSquare.LocationToEast = guardPost;
-            townSquare.LocationToWest = farmhouse;
+            forest.LocationToNorth = alchemistHut;
+            forest.LocationToSouth = startLocation;
+            forest.LocationToEast = guardPost;
+            forest.LocationToWest = farmhouse;
 
-            farmhouse.LocationToEast = townSquare;
+            farmhouse.LocationToEast = forest;
             farmhouse.LocationToWest = farmersField;
 
             farmersField.LocationToEast = farmhouse;
@@ -199,13 +229,13 @@ namespace Engine
 
             swamp.LocationToEast = farmersField;
 
-            alchemistHut.LocationToSouth = townSquare;
+            alchemistHut.LocationToSouth = forest;
             alchemistHut.LocationToNorth = alchemistsGarden;
 
             alchemistsGarden.LocationToSouth = alchemistHut;
 
             guardPost.LocationToEast = bridge;
-            guardPost.LocationToWest = townSquare;
+            guardPost.LocationToWest = forest;
 
             bridge.LocationToWest = guardPost;
             bridge.LocationToEast = spiderField;
@@ -214,7 +244,7 @@ namespace Engine
 
             // Add the locations to the static list
             Locations.Add(startLocation);
-            Locations.Add(townSquare);
+            Locations.Add(forest);
             Locations.Add(guardPost);
             Locations.Add(alchemistHut);
             Locations.Add(alchemistsGarden);

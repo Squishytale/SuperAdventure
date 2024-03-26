@@ -52,6 +52,7 @@
             label6 = new Label();
             lblStone = new Label();
             buyBoneSword = new Button();
+            craftFireSword = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvQuests).BeginInit();
             SuspendLayout();
@@ -277,19 +278,30 @@
             // 
             // buyBoneSword
             // 
-            buyBoneSword.Location = new Point(369, 523);
+            buyBoneSword.Location = new Point(334, 487);
             buyBoneSword.Name = "buyBoneSword";
-            buyBoneSword.Size = new Size(125, 23);
+            buyBoneSword.Size = new Size(150, 23);
             buyBoneSword.TabIndex = 24;
-            buyBoneSword.Text = "BUY BONE SWORD";
+            buyBoneSword.Text = "CRAFT BONE SWORD";
             buyBoneSword.UseVisualStyleBackColor = true;
             buyBoneSword.Click += buyBoneSword_Click;
+            // 
+            // craftFireSword
+            // 
+            craftFireSword.Location = new Point(334, 516);
+            craftFireSword.Name = "craftFireSword";
+            craftFireSword.Size = new Size(150, 23);
+            craftFireSword.TabIndex = 25;
+            craftFireSword.Text = "CRAFT FIRE SWORD";
+            craftFireSword.UseVisualStyleBackColor = true;
+            craftFireSword.Click += craftFireSword_Click;
             // 
             // SuperAdventure
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(719, 651);
+            Controls.Add(craftFireSword);
             Controls.Add(buyBoneSword);
             Controls.Add(lblStone);
             Controls.Add(label6);
@@ -349,5 +361,6 @@
         private Label label6;
         private Label lblStone;
         private Button buyBoneSword;
+        private Button craftFireSword;
     }
 }
