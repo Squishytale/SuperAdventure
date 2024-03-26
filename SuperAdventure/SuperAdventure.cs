@@ -518,6 +518,9 @@ namespace SuperAdventure
 
         private void buyBoneSword_Click(object sender, EventArgs e)
         {
+            rtbMessages.Text += Environment.NewLine + "5 bones are required." + Environment.NewLine;
+            ScrollToBottomOfMessages();
+
             // loop through each item in the players inventory
             foreach (InventoryItem ii in _player.Inventory.ToList())
             {
@@ -532,13 +535,18 @@ namespace SuperAdventure
                         // give the player a bone sword
                         _player.AddItemToInventory((World.ItemByID(15)));
 
-                    }
-                    else
-                    {
-                        // tell the user that they dont have enough bones
-                        rtbMessages.Text += "You only have " + ii.Quantity + " bones. You need 5 bones to craft the bone sword." + Environment.NewLine;
+                        // Refresh player's weapons combobox
+                        UpdateWeaponListInUI();
+
+                        rtbMessages.Text += Environment.NewLine + "Bone Sword added to inventory! " + Environment.NewLine;
                         ScrollToBottomOfMessages();
 
+                        
+
+                    } else
+                    {
+                        rtbMessages.Text += Environment.NewLine + "Need 5 bones." + Environment.NewLine;
+                        ScrollToBottomOfMessages();
                     }
 
                 }
@@ -550,6 +558,8 @@ namespace SuperAdventure
 
         private void craftFireSword_Click(object sender, EventArgs e)
         {
+            rtbMessages.Text += Environment.NewLine + "1 Fire rune is required." + Environment.NewLine;
+            ScrollToBottomOfMessages();
             // loop through each item in the players inventory
             foreach (InventoryItem ii in _player.Inventory.ToList())
             {
@@ -565,16 +575,23 @@ namespace SuperAdventure
                         // remove 1 fire rune from the player
                         ii.Quantity -= 1;
 
+                        // Refresh player's weapons combobox
+                        UpdateWeaponListInUI();
+
+                        rtbMessages.Text += Environment.NewLine + "Fire Sword added to inventory! " + Environment.NewLine + Environment.NewLine;
+                        ScrollToBottomOfMessages();
+
+
                     }
                     else
                     {
-                        // tell the user that they dont have enough bones
-                        rtbMessages.Text += "You have no runes. You need 1 fire rune to craft the fire sword." + Environment.NewLine;
+                        rtbMessages.Text += Environment.NewLine + "Need 1 rune." + Environment.NewLine;
                         ScrollToBottomOfMessages();
-
                     }
 
+
                 }
+                
             }
             // update inventory list
             UpdateInventoryListInUI();
