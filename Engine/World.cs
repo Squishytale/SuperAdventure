@@ -31,6 +31,8 @@ namespace Engine
         public const int ITEM_ID_FIRE_RUNE = 16;
         public const int ITEM_ID_GOBLIN_HEAD = 17;
         public const int ITEM_ID_FIRE_SWORD = 18;
+        public const int ITEM_ID_GIANT_BOAR_HEAD = 19;
+        public const int ITEM_ID_LEATHER_HELMET = 20;
 
 
 
@@ -41,12 +43,14 @@ namespace Engine
         public const int MONSTER_ID_SLIMES = 5;
         public const int MONSTER_ID_SKELETON = 6;
         public const int MONSTER_ID_GOBLIN = 7;
-        public const int MONSTER_ID_DRAGON = 8;
+        public const int MONSTER_ID_GIANT_BOAR= 8;
+        
 
         public const int QUEST_ID_CLEAR_ALCHEMIST_GARDEN = 1;
         public const int QUEST_ID_CLEAR_FARMERS_FIELD = 2;
         public const int QUEST_ID_CLEAR_SWAMP = 3;
         public const int QUEST_ID_CLEAR_FOREST = 4;
+        public const int QUEST_ID_CLEAR_PLAINS = 5;
 
         public const int LOCATION_ID_START_CAVE = 1;
         public const int LOCATION_ID_FOREST = 2;
@@ -58,6 +62,8 @@ namespace Engine
         public const int LOCATION_ID_BRIDGE = 8;
         public const int LOCATION_ID_SPIDER_FIELD = 9;
         public const int LOCATION_ID_SWAMP = 10;
+        public const int LOCATION_ID_PLAINS = 11;
+        
         
 
         static World()
@@ -88,12 +94,17 @@ namespace Engine
             Items.Add(new Item(ITEM_ID_FIRE_RUNE, "Fire Rune", "Fire Runes"));
             Items.Add(new Item(ITEM_ID_GOBLIN_HEAD, "Goblin Head", "Goblin Heads"));
             Items.Add(new Weapon(ITEM_ID_FIRE_SWORD, "Fire Sword", "Fire Swords", 50, 100));
+            Items.Add(new Item(ITEM_ID_GIANT_BOAR_HEAD, "Giant Boar Head", "Giant Boar Heads"));
+            Items.Add(new Item(ITEM_ID_LEATHER_HELMET, "Leather Helmet", "Leather Helmets"));
 
 
         }
 
         private static void PopulateMonsters()
         {
+            Monster giantBoar = new Monster(MONSTER_ID_GIANT_BOAR, "Giant Boar", 10, 50, 50, 50, 50);
+            giantBoar.LootTable.Add(new LootItem(ItemByID(ITEM_ID_GIANT_BOAR_HEAD), 100, false));
+            
 
             Monster goblin = new Monster(MONSTER_ID_GOBLIN, "Goblin", 5, 3, 10, 10, 10);
             goblin.LootTable.Add(new LootItem(ItemByID(ITEM_ID_GOBLIN_HEAD), 100, false));
@@ -123,6 +134,7 @@ namespace Engine
             Monsters.Add(slime);
             Monsters.Add(skeleton);
             Monsters.Add(goblin);
+            Monsters.Add(giantBoar);
         }
 
         private static void PopulateQuests()
@@ -174,10 +186,22 @@ namespace Engine
 
             clearFarmersField.RewardItem = ItemByID(ITEM_ID_ADVENTURER_PASS);
 
+
+            Quest clearPlains =
+                new Quest(
+                    QUEST_ID_CLEAR_PLAINS,
+                    "Clear the plains",
+                    "Kill the giant boar! this son of bitch is destroying my crops! bring back its head and you will recieve a hat!", 100, 30);
+
+            clearPlains.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_GIANT_BOAR_HEAD), 1));
+
+            clearPlains.RewardItem = ItemByID(ITEM_ID_LEATHER_HELMET);
+
             Quests.Add(clearAlchemistGarden);
             Quests.Add(clearFarmersField);
             Quests.Add(clearSwamp);
             Quests.Add(clearForest);
+            Quests.Add(clearPlains);
         }
 
         private static void PopulateLocations()
@@ -214,12 +238,16 @@ namespace Engine
             Location spiderField = new Location(LOCATION_ID_SPIDER_FIELD, "Forest", "You see spider webs covering covering the trees in this forest.");
             spiderField.MonsterLivingHere = MonsterByID(MONSTER_ID_GIANT_SPIDER);
 
+            Location plains = new Location(LOCATION_ID_PLAINS, "The Plains", "The wide ever expanding plains, it gives me a sense of calming and the breeze is amazing, I can see everything even the mountains.");
+            plains.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_PLAINS);
+            plains.MonsterLivingHere = MonsterByID(MONSTER_ID_GIANT_BOAR);
+
             // Link the locations together
             startLocation.LocationToNorth = forest;
 
             forest.LocationToNorth = alchemistHut;
             forest.LocationToSouth = startLocation;
-            forest.LocationToEast = guardPost;
+            forest.LocationToEast = plains;
             forest.LocationToWest = farmhouse;
 
             farmhouse.LocationToEast = forest;
@@ -235,10 +263,10 @@ namespace Engine
 
             alchemistsGarden.LocationToSouth = alchemistHut;
 
-            guardPost.LocationToEast = bridge;
-            guardPost.LocationToWest = forest;
+            plains.LocationToEast = bridge;
+            plains.LocationToWest = forest;
 
-            bridge.LocationToWest = guardPost;
+            bridge.LocationToWest = plains;
             bridge.LocationToEast = spiderField;
 
             spiderField.LocationToWest = bridge;
@@ -254,6 +282,7 @@ namespace Engine
             Locations.Add(bridge);
             Locations.Add(spiderField);
             Locations.Add(swamp);
+            Locations.Add(plains);
         }
 
         public static Item ItemByID(int id)
