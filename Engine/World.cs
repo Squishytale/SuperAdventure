@@ -41,7 +41,7 @@ namespace Engine
         public const int MONSTER_ID_SLIMES = 5;
         public const int MONSTER_ID_SKELETON = 6;
         public const int MONSTER_ID_GOBLIN = 7;
-
+        public const int MONSTER_ID_DRAGON = 8;
 
         public const int QUEST_ID_CLEAR_ALCHEMIST_GARDEN = 1;
         public const int QUEST_ID_CLEAR_FARMERS_FIELD = 2;
@@ -94,6 +94,7 @@ namespace Engine
 
         private static void PopulateMonsters()
         {
+
             Monster goblin = new Monster(MONSTER_ID_GOBLIN, "Goblin", 5, 3, 10, 10, 10);
             goblin.LootTable.Add(new LootItem(ItemByID(ITEM_ID_GOBLIN_HEAD), 100, false));
 
