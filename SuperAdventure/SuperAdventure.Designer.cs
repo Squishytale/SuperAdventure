@@ -212,6 +212,7 @@
             // 
             // rtbLocation
             // 
+            rtbLocation.Font = new Font("Adobe Handwriting Tiffany", 11.999999F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rtbLocation.Location = new Point(347, 19);
             rtbLocation.Name = "rtbLocation";
             rtbLocation.ReadOnly = true;
@@ -221,6 +222,7 @@
             // 
             // rtbMessages
             // 
+            rtbMessages.Font = new Font("Lato Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rtbMessages.Location = new Point(347, 130);
             rtbMessages.Name = "rtbMessages";
             rtbMessages.Size = new Size(360, 286);

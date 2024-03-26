@@ -545,7 +545,7 @@ namespace SuperAdventure
 
                     } else
                     {
-                        rtbMessages.Text += Environment.NewLine + "Need 5 bones." + Environment.NewLine;
+                        rtbMessages.Text += Environment.NewLine + "5 bones are required." + Environment.NewLine;
                         ScrollToBottomOfMessages();
                     }
 
@@ -585,7 +585,7 @@ namespace SuperAdventure
                     }
                     else
                     {
-                        rtbMessages.Text += Environment.NewLine + "Need 1 rune." + Environment.NewLine;
+                        rtbMessages.Text += Environment.NewLine + "1 fire rune is required." + Environment.NewLine;
                         ScrollToBottomOfMessages();
                     }
 
