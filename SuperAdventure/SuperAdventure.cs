@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.IO;
 
 using Engine;
+using static System.Windows.Forms.Design.AxImporter;
+using System.Numerics;
 
 namespace SuperAdventure
 {
@@ -509,6 +511,37 @@ namespace SuperAdventure
         private void SuperAdventure_FormClosing(object sender, FormClosingEventArgs e)
         {
             File.WriteAllText(PLAYER_DATA_FILE_NAME, _player.ToXmlString());
+        }
+
+        private void buyBoneSword_Click(object sender, EventArgs e)
+        {
+            // loop through each item in the players inventory
+            foreach (InventoryItem ii in _player.Inventory)
+            {
+                // check to see if the user has bones in their inventory
+                if (ii.Details.ID == 14)
+                {
+                    // check to see if the user has 5 bones
+                    if (ii.Quantity >= 5)
+                    {
+                        // remove 5 bones from the player
+                        ii.Quantity -= 5;
+                        // give the player a bone sword
+                        _player.AddItemToInventory((World.ItemByID(15)));
+
+                    } 
+                    else
+                    {
+                        // tell the user that they dont have enough bones
+                        rtbMessages.Text += "You only have " + ii.Quantity + " bones. You need 5 bones to craft the bone sword." + Environment.NewLine;
+                        ScrollToBottomOfMessages();
+                        
+                    }
+                    
+                }
+            }
+            UpdateInventoryListInUI();
+
         }
     }
 }

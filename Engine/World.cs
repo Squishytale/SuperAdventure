@@ -27,6 +27,8 @@ namespace Engine
         public const int ITEM_ID_GREAT_AXE = 12;
         public const int ITEM_ID_FIREBALL = 13;
         public const int ITEM_ID_BONE = 14;
+        public const int ITEM_ID_BONE_SWORD = 15;
+
 
 
         public const int MONSTER_ID_RAT = 1;
@@ -76,6 +78,7 @@ namespace Engine
             Items.Add(new Item(ITEM_ID_ADVENTURER_PASS, "Adventurer pass", "Adventurer passes"));
             Items.Add(new Item(ITEM_ID_SQUISH, "One Squish", "Squishies"));
             Items.Add(new Item(ITEM_ID_BONE, "Bone", "Bones"));
+            Items.Add(new Weapon(ITEM_ID_BONE_SWORD, "Bone Sword", "Bone Swords", 50, 100));
 
         }
 

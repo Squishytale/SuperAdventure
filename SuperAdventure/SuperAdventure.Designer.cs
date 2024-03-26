@@ -51,6 +51,7 @@
             dgvQuests = new DataGridView();
             label6 = new Label();
             lblStone = new Label();
+            buyBoneSword = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvQuests).BeginInit();
             SuspendLayout();
@@ -274,11 +275,22 @@
             lblStone.Size = new Size(0, 15);
             lblStone.TabIndex = 23;
             // 
+            // buyBoneSword
+            // 
+            buyBoneSword.Location = new Point(369, 523);
+            buyBoneSword.Name = "buyBoneSword";
+            buyBoneSword.Size = new Size(125, 23);
+            buyBoneSword.TabIndex = 24;
+            buyBoneSword.Text = "BUY BONE SWORD";
+            buyBoneSword.UseVisualStyleBackColor = true;
+            buyBoneSword.Click += buyBoneSword_Click;
+            // 
             // SuperAdventure
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(719, 651);
+            Controls.Add(buyBoneSword);
             Controls.Add(lblStone);
             Controls.Add(label6);
             Controls.Add(dgvQuests);
@@ -336,5 +348,6 @@
         private DataGridView dgvQuests;
         private Label label6;
         private Label lblStone;
+        private Button buyBoneSword;
     }
 }
