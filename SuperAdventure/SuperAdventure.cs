@@ -445,7 +445,7 @@ namespace SuperAdventure
                     ScrollToBottomOfMessages();
 
                     // Move player to "Home"
-                    MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
+                    MoveTo(World.LocationByID(World.LOCATION_ID_START_CAVE));
                 }
             }
         }
@@ -497,7 +497,7 @@ namespace SuperAdventure
                 ScrollToBottomOfMessages();
 
                 // Move player to "Home"
-                MoveTo(World.LocationByID(World.LOCATION_ID_HOME));
+                MoveTo(World.LocationByID(World.LOCATION_ID_START_CAVE));
             }
 
             // Refresh player data in UI

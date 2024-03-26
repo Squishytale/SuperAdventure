@@ -26,19 +26,22 @@ namespace Engine
         public const int ITEM_ID_SQUISH = 11;
         public const int ITEM_ID_GREAT_AXE = 12;
         public const int ITEM_ID_FIREBALL = 13;
+        public const int ITEM_ID_BONE = 14;
+
 
         public const int MONSTER_ID_RAT = 1;
         public const int MONSTER_ID_SNAKE = 2;
         public const int MONSTER_ID_GIANT_SPIDER = 3;
         public const int MONSTER_ID_ZOMBIE = 4;
         public const int MONSTER_ID_SLIMES = 5;
+        public const int MONSTER_ID_SKELETON = 6;
 
 
         public const int QUEST_ID_CLEAR_ALCHEMIST_GARDEN = 1;
         public const int QUEST_ID_CLEAR_FARMERS_FIELD = 2;
         public const int QUEST_ID_CLEAR_SWAMP = 3;
 
-        public const int LOCATION_ID_HOME = 1;
+        public const int LOCATION_ID_START_CAVE = 1;
         public const int LOCATION_ID_TOWN_SQUARE = 2;
         public const int LOCATION_ID_GUARD_POST = 3;
         public const int LOCATION_ID_ALCHEMIST_HUT = 4;
@@ -59,7 +62,7 @@ namespace Engine
 
         private static void PopulateItems()
         {
-            Items.Add(new Weapon (ITEM_ID_FIREBALL, "Fireball", "FireballS", 50, 100));
+            Items.Add(new Weapon (ITEM_ID_FIREBALL, "Fireball", "Fireballs", 50, 100));
             Items.Add(new Weapon(ITEM_ID_GREAT_AXE, "Great Axe", "Great Axes", 5, 25));
             Items.Add(new Weapon(ITEM_ID_RUSTY_SWORD, "Rusty sword", "Rusty swords", 15, 50));
             Items.Add(new Item(ITEM_ID_RAT_TAIL, "Rat tail", "Rat tails"));
@@ -72,12 +75,15 @@ namespace Engine
             Items.Add(new Item(ITEM_ID_SPIDER_SILK, "Spider silk", "Spider silks"));
             Items.Add(new Item(ITEM_ID_ADVENTURER_PASS, "Adventurer pass", "Adventurer passes"));
             Items.Add(new Item(ITEM_ID_SQUISH, "One Squish", "Squishies"));
+            Items.Add(new Item(ITEM_ID_BONE, "Bone", "Bones"));
+
         }
 
         private static void PopulateMonsters()
         {
 
-
+            Monster skeleton = new Monster(MONSTER_ID_SKELETON, "Skeleton", 5, 3, 10, 10, 10);
+            skeleton.LootTable.Add(new LootItem(ItemByID(ITEM_ID_BONE), 75, false));
 
             Monster rat = new Monster(MONSTER_ID_RAT, "Rat", 5, 3, 10, 1000, 1000);
             rat.LootTable.Add(new LootItem(ItemByID(ITEM_ID_RAT_TAIL), 75, false));
@@ -99,6 +105,7 @@ namespace Engine
             Monsters.Add(snake);
             Monsters.Add(giantSpider);
             Monsters.Add(slime);
+            Monsters.Add(skeleton);
         }
 
         private static void PopulateQuests()
@@ -144,12 +151,13 @@ namespace Engine
         {
             // Create each location
 
+            Location startLocation = new Location(LOCATION_ID_START_CAVE, "A Dark Cave", "A dark room with anicient glowing runes. One red, one blue and one green.");
+            startLocation.MonsterLivingHere = MonsterByID(MONSTER_ID_SKELETON);
+
             Location swamp = new Location(LOCATION_ID_SWAMP, "Swamp", "A dark smelly swamp with lots of squishy sounds.");
             swamp.QuestAvailableHere = QuestByID(QUEST_ID_CLEAR_SWAMP);
             swamp.MonsterLivingHere = MonsterByID(MONSTER_ID_SLIMES);
 
-
-            Location home = new Location(LOCATION_ID_HOME, "Home", "Your house. You really need to clean up the place.");
 
             Location townSquare = new Location(LOCATION_ID_TOWN_SQUARE, "Town square", "You see a fountain.");
 
@@ -173,10 +181,10 @@ namespace Engine
             spiderField.MonsterLivingHere = MonsterByID(MONSTER_ID_GIANT_SPIDER);
 
             // Link the locations together
-            home.LocationToNorth = townSquare;
+            startLocation.LocationToNorth = townSquare;
 
             townSquare.LocationToNorth = alchemistHut;
-            townSquare.LocationToSouth = home;
+            townSquare.LocationToSouth = startLocation;
             townSquare.LocationToEast = guardPost;
             townSquare.LocationToWest = farmhouse;
 
@@ -202,7 +210,7 @@ namespace Engine
             spiderField.LocationToWest = bridge;
 
             // Add the locations to the static list
-            Locations.Add(home);
+            Locations.Add(startLocation);
             Locations.Add(townSquare);
             Locations.Add(guardPost);
             Locations.Add(alchemistHut);
