@@ -478,7 +478,7 @@ namespace SuperAdventure
             }
 
             // Display message
-            rtbMessages.Text += "You drink a " + potion.Name + Environment.NewLine;
+            rtbMessages.Text += "You consumed a " + potion.Name + Environment.NewLine;
             ScrollToBottomOfMessages();
 
             // Monster gets their turn to attack
@@ -541,9 +541,10 @@ namespace SuperAdventure
                         rtbMessages.Text += Environment.NewLine + "Bone Sword added to inventory! " + Environment.NewLine;
                         ScrollToBottomOfMessages();
 
-                        
 
-                    } else
+
+                    }
+                    else
                     {
                         rtbMessages.Text += Environment.NewLine + "5 bones are required." + Environment.NewLine;
                         ScrollToBottomOfMessages();
@@ -569,7 +570,7 @@ namespace SuperAdventure
                     // check to see if the user has 1 fire rune
                     if (ii.Quantity >= 1)
                     {
-                        
+
                         // give the player a fire sword
                         _player.AddItemToInventory((World.ItemByID(18)));
                         // remove 1 fire rune from the player
@@ -591,10 +592,52 @@ namespace SuperAdventure
 
 
                 }
-                
+
             }
             // update inventory list
             UpdateInventoryListInUI();
+        }
+
+        private void craftLeatherHelmet_Click(object sender, EventArgs e)
+        {
+            rtbMessages.Text += Environment.NewLine + "1 Leather scrap is required." + Environment.NewLine;
+            ScrollToBottomOfMessages();
+            // loop through each item in the players inventory
+            foreach (InventoryItem ii in _player.Inventory.ToList())
+            {
+                // check to see if the user has a leather scrap in their inventory
+                if (ii.Details.ID == 22)
+                {
+                    // check to see if the user has 1 leather scrap
+                    if (ii.Quantity >= 1)
+                    {
+
+                        // give the player a leather helmet
+                        _player.AddItemToInventory((World.ItemByID(20)));
+                        // remove 1 leather scrap from the player
+                        ii.Quantity -= 1;
+
+                        // refresh the player inventory
+                        UpdateInventoryListInUI();
+
+                        rtbMessages.Text += Environment.NewLine + "Leather Helmet added to inventory! " + Environment.NewLine + Environment.NewLine;
+                        ScrollToBottomOfMessages();
+
+
+                    }
+                    else
+                    {
+                        rtbMessages.Text += Environment.NewLine + "1 Leather scrap is required." + Environment.NewLine;
+                        ScrollToBottomOfMessages();
+                    }
+
+
+                }
+
+            }
+            // update inventory list
+            UpdateInventoryListInUI();
+
         }
     }
 }

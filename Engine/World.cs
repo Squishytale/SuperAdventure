@@ -33,6 +33,8 @@ namespace Engine
         public const int ITEM_ID_FIRE_SWORD = 18;
         public const int ITEM_ID_GIANT_BOAR_HEAD = 19;
         public const int ITEM_ID_LEATHER_HELMET = 20;
+        public const int ITEM_ID_RAW_MEAT = 21;
+        public const int ITEM_ID_LEATHER_SCRAPS = 22;
 
 
 
@@ -96,6 +98,11 @@ namespace Engine
             Items.Add(new Weapon(ITEM_ID_FIRE_SWORD, "Fire Sword", "Fire Swords", 50, 100));
             Items.Add(new Item(ITEM_ID_GIANT_BOAR_HEAD, "Giant Boar Head", "Giant Boar Heads"));
             Items.Add(new Item(ITEM_ID_LEATHER_HELMET, "Leather Helmet", "Leather Helmets"));
+            Items.Add(new HealingPotion(ITEM_ID_RAW_MEAT, "Raw Meat", "Raw Meats", 8));
+            Items.Add(new Item(ITEM_ID_LEATHER_SCRAPS, "Leather Scrap", "Leather Scraps"));
+
+
+
 
 
         }
@@ -104,7 +111,9 @@ namespace Engine
         {
             Monster giantBoar = new Monster(MONSTER_ID_GIANT_BOAR, "Giant Boar", 10, 50, 50, 50, 50);
             giantBoar.LootTable.Add(new LootItem(ItemByID(ITEM_ID_GIANT_BOAR_HEAD), 100, false));
-            
+            giantBoar.LootTable.Add(new LootItem(ItemByID(ITEM_ID_RAW_MEAT), 100, false));
+            giantBoar.LootTable.Add(new LootItem(ItemByID(ITEM_ID_LEATHER_SCRAPS), 100, false));
+
 
             Monster goblin = new Monster(MONSTER_ID_GOBLIN, "Goblin", 5, 3, 10, 10, 10);
             goblin.LootTable.Add(new LootItem(ItemByID(ITEM_ID_GOBLIN_HEAD), 100, false));
@@ -195,7 +204,7 @@ namespace Engine
 
             clearPlains.QuestCompletionItems.Add(new QuestCompletionItem(ItemByID(ITEM_ID_GIANT_BOAR_HEAD), 1));
 
-            clearPlains.RewardItem = ItemByID(ITEM_ID_LEATHER_HELMET);
+            clearPlains.RewardItem = ItemByID(ITEM_ID_HEALING_POTION);
 
             Quests.Add(clearAlchemistGarden);
             Quests.Add(clearFarmersField);

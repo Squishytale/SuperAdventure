@@ -53,6 +53,7 @@
             lblStone = new Label();
             buyBoneSword = new Button();
             craftFireSword = new Button();
+            craftLeatherHelmet = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvQuests).BeginInit();
             SuspendLayout();
@@ -137,7 +138,7 @@
             // cboWeapons
             // 
             cboWeapons.FormattingEnabled = true;
-            cboWeapons.Location = new Point(369, 559);
+            cboWeapons.Location = new Point(493, 559);
             cboWeapons.Name = "cboWeapons";
             cboWeapons.Size = new Size(121, 23);
             cboWeapons.TabIndex = 10;
@@ -145,7 +146,7 @@
             // cboPotions
             // 
             cboPotions.FormattingEnabled = true;
-            cboPotions.Location = new Point(369, 593);
+            cboPotions.Location = new Point(493, 593);
             cboPotions.Name = "cboPotions";
             cboPotions.Size = new Size(121, 23);
             cboPotions.TabIndex = 11;
@@ -212,7 +213,7 @@
             // 
             // rtbLocation
             // 
-            rtbLocation.Font = new Font("Adobe Handwriting Tiffany", 11.999999F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            rtbLocation.Font = new Font("Microsoft Sans Serif", 11.999999F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rtbLocation.Location = new Point(347, 19);
             rtbLocation.Name = "rtbLocation";
             rtbLocation.ReadOnly = true;
@@ -222,7 +223,7 @@
             // 
             // rtbMessages
             // 
-            rtbMessages.Font = new Font("Lato Semibold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            rtbMessages.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             rtbMessages.Location = new Point(347, 130);
             rtbMessages.Name = "rtbMessages";
             rtbMessages.Size = new Size(360, 286);
@@ -280,7 +281,7 @@
             // 
             // buyBoneSword
             // 
-            buyBoneSword.Location = new Point(334, 487);
+            buyBoneSword.Location = new Point(334, 529);
             buyBoneSword.Name = "buyBoneSword";
             buyBoneSword.Size = new Size(150, 23);
             buyBoneSword.TabIndex = 24;
@@ -290,7 +291,7 @@
             // 
             // craftFireSword
             // 
-            craftFireSword.Location = new Point(334, 516);
+            craftFireSword.Location = new Point(334, 558);
             craftFireSword.Name = "craftFireSword";
             craftFireSword.Size = new Size(150, 23);
             craftFireSword.TabIndex = 25;
@@ -298,11 +299,22 @@
             craftFireSword.UseVisualStyleBackColor = true;
             craftFireSword.Click += craftFireSword_Click;
             // 
+            // craftLeatherHelmet
+            // 
+            craftLeatherHelmet.Location = new Point(334, 593);
+            craftLeatherHelmet.Name = "craftLeatherHelmet";
+            craftLeatherHelmet.Size = new Size(150, 24);
+            craftLeatherHelmet.TabIndex = 26;
+            craftLeatherHelmet.Text = "CRAFT LEATHER HELMET";
+            craftLeatherHelmet.UseVisualStyleBackColor = true;
+            craftLeatherHelmet.Click += craftLeatherHelmet_Click;
+            // 
             // SuperAdventure
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(719, 651);
+            Controls.Add(craftLeatherHelmet);
             Controls.Add(craftFireSword);
             Controls.Add(buyBoneSword);
             Controls.Add(lblStone);
@@ -364,5 +376,6 @@
         private Label lblStone;
         private Button buyBoneSword;
         private Button craftFireSword;
+        private Button craftLeatherHelmet;
     }
 }
