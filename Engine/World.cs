@@ -85,8 +85,8 @@ namespace Engine
         }
         private static void PopulateRecipes()
         {
-            Recipe.Add(new Recipe(CRAFTING_RECIPE_IRON_SWORD_ID, "Iron Sword", "Sword Swords", ITEM_ID_IRON_SCRAPS, 5, ITEM_ID_IRON_SWORD));
-            Recipe.Add(new Recipe(CRAFTING_RECIPE_RED_DYE, "Red Dye", "Red Dyes", ITEM_ID_ROSES, 3, ITEM_ID_RED_DYE));
+            Recipes.Add(new Recipe(CRAFTING_RECIPE_IRON_SWORD_ID, "Iron Sword", "Sword Swords", ITEM_ID_IRON_SCRAPS, 5, ITEM_ID_IRON_SWORD));
+            Recipes.Add(new Recipe(CRAFTING_RECIPE_RED_DYE, "Red Dye", "Red Dyes", ITEM_ID_ROSES, 3, ITEM_ID_RED_DYE));
             
 
         }
