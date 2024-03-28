@@ -12,6 +12,7 @@ namespace Engine
         public static readonly List<Monster> Monsters = new List<Monster>();
         public static readonly List<Quest> Quests = new List<Quest>();
         public static readonly List<Location> Locations = new List<Location>();
+        public static readonly List<Recipe> Recipes = new List<Recipe>();
 
         public const int ITEM_ID_RUSTY_SWORD = 1;
         public const int ITEM_ID_RAT_TAIL = 2;
@@ -35,6 +36,13 @@ namespace Engine
         public const int ITEM_ID_LEATHER_HELMET = 20;
         public const int ITEM_ID_RAW_MEAT = 21;
         public const int ITEM_ID_LEATHER_SCRAPS = 22;
+        public const int ITEM_ID_IRON_SCRAPS = 23;
+        public const int ITEM_ID_IRON_SWORD = 24;
+        public const int CRAFTING_RECIPE_IRON_SWORD_ID = 25;
+        public const int ITEM_ID_RED_DYE = 26;
+        public const int CRAFTING_RECIPE_RED_DYE = 27;
+        public const int ITEM_ID_ROSES = 28;
+
 
 
 
@@ -75,7 +83,13 @@ namespace Engine
             PopulateQuests();
             PopulateLocations();
         }
+        private static void PopulateRecipes()
+        {
+            Recipe.Add(new Recipe(CRAFTING_RECIPE_IRON_SWORD_ID, "Iron Sword", "Sword Swords", ITEM_ID_IRON_SCRAPS, 5, ITEM_ID_IRON_SWORD));
+            Recipe.Add(new Recipe(CRAFTING_RECIPE_RED_DYE, "Red Dye", "Red Dyes", ITEM_ID_ROSES, 3, ITEM_ID_RED_DYE));
+            
 
+        }
         private static void PopulateItems()
         {
             Items.Add(new Weapon(ITEM_ID_FIREBALL, "Fireball", "Fireballs", 50, 100));
@@ -100,6 +114,11 @@ namespace Engine
             Items.Add(new Item(ITEM_ID_LEATHER_HELMET, "Leather Helmet", "Leather Helmets"));
             Items.Add(new HealingPotion(ITEM_ID_RAW_MEAT, "Raw Meat", "Raw Meats", 8));
             Items.Add(new Item(ITEM_ID_LEATHER_SCRAPS, "Leather Scrap", "Leather Scraps"));
+            Items.Add(new Item(ITEM_ID_IRON_SCRAPS, "Iron Scrap", "Iron Scraps"));
+            Items.Add(new Weapon(ITEM_ID_IRON_SWORD, "Iron Sword", "Iron Swords", 20, 50));
+            Items.Add(new Item(ITEM_ID_RED_DYE, "Red Rose", "Red Roses"));
+            Items.Add(new Item(ITEM_ID_ROSES, "Rose", "Roses"));
+
 
 
 
@@ -301,6 +320,18 @@ namespace Engine
                 if (item.ID == id)
                 {
                     return item;
+                }
+            }
+
+            return null;
+        }
+        public static Recipe RecipeByID(int id)
+        {
+            foreach (Recipe recipe in Recipes)
+            {
+                if (recipe.ID == id)
+                {
+                    return recipe;
                 }
             }
 

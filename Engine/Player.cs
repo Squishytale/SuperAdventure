@@ -23,6 +23,7 @@ namespace Engine
         public Weapon CurrentWeapon { get; set; }
 
         public List<InventoryItem> Inventory { get; set; }
+        public List<InventoryRecipe> Recipes { get; set; }
         public List<PlayerQuest> Quests { get; set; }
 
         private Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
@@ -31,12 +32,16 @@ namespace Engine
             ExperiencePoints = experiencePoints;
             Inventory = new List<InventoryItem>();
             Quests = new List<PlayerQuest>();
+            Recipes = new List<InventoryRecipe>();
         }
         public static Player CreateDefaultPlayer()
         {
             Player player = new Player(10, 10, 20, 0);
             player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_RUSTY_SWORD), 1));
-            player.CurrentLocation = World.LocationByID(World.LOCATION_ID_START_CAVE);
+            player.CurrentLocation = World.LocationByID(World.LOCATION_ID_PLAINS);
+            player.Recipes.Add(new InventoryRecipe(World.RecipeByID(World.CRAFTING_RECIPE_RED_DYE), 1));
+            player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_IRON_SCRAPS), 5));
+            player.Inventory.Add(new InventoryItem(World.ItemByID(World.ITEM_ID_ROSES), 5));
 
             return player;
         }
