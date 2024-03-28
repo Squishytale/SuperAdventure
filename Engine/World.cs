@@ -82,6 +82,7 @@ namespace Engine
             PopulateMonsters();
             PopulateQuests();
             PopulateLocations();
+            PopulateRecipes();
         }
         private static void PopulateRecipes()
         {

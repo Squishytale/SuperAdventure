@@ -54,6 +54,8 @@
             buyBoneSword = new Button();
             craftFireSword = new Button();
             craftLeatherHelmet = new Button();
+            cboRecipes = new ComboBox();
+            btnCraftItem = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvInventory).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvQuests).BeginInit();
             SuspendLayout();
@@ -309,11 +311,31 @@
             craftLeatherHelmet.UseVisualStyleBackColor = true;
             craftLeatherHelmet.Click += craftLeatherHelmet_Click;
             // 
+            // cboRecipes
+            // 
+            cboRecipes.FormattingEnabled = true;
+            cboRecipes.Location = new Point(493, 622);
+            cboRecipes.Name = "cboRecipes";
+            cboRecipes.Size = new Size(121, 23);
+            cboRecipes.TabIndex = 27;
+            // 
+            // btnCraftItem
+            // 
+            btnCraftItem.Location = new Point(620, 622);
+            btnCraftItem.Name = "btnCraftItem";
+            btnCraftItem.Size = new Size(75, 23);
+            btnCraftItem.TabIndex = 28;
+            btnCraftItem.Text = "craft";
+            btnCraftItem.UseVisualStyleBackColor = true;
+            btnCraftItem.Click += btnCraftItem_Click;
+            // 
             // SuperAdventure
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(719, 651);
+            Controls.Add(btnCraftItem);
+            Controls.Add(cboRecipes);
             Controls.Add(craftLeatherHelmet);
             Controls.Add(craftFireSword);
             Controls.Add(buyBoneSword);
@@ -377,5 +399,7 @@
         private Button buyBoneSword;
         private Button craftFireSword;
         private Button craftLeatherHelmet;
+        private ComboBox cboRecipes;
+        private Button btnCraftItem;
     }
 }

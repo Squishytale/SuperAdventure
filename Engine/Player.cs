@@ -21,6 +21,7 @@ namespace Engine
         }
         public Location CurrentLocation { get; set; }
         public Weapon CurrentWeapon { get; set; }
+        public Recipe CurrentRecipe { get; set; }
 
         public List<InventoryItem> Inventory { get; set; }
         public List<InventoryRecipe> Recipes { get; set; }

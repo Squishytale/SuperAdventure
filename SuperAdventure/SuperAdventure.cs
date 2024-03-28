@@ -40,7 +40,11 @@ namespace SuperAdventure
         {
             _player.CurrentWeapon = (Weapon)cboWeapons.SelectedItem;
         }
-
+        private void cboRecipes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _player.CurrentRecipe = (Recipe)cboRecipes.SelectedItem;
+        }
+        
         private void UpdatePlayerStats()
         {
             // Refresh player information and inventory controls
@@ -302,6 +306,48 @@ namespace SuperAdventure
                 }
             }
         }
+        // Creates the function, updates the crafting list in the UI .
+        private void UpdateCraftingListInUI()
+        { // Creats a new list to hold recipes
+            List<Recipe> recipes = new List<Recipe>();
+            // Loops through players recipes list
+            foreach (InventoryRecipe x in _player.Recipes)
+            { // Gets the details of each recipe
+                if (x.Details is Recipe)
+                { // If player has at least 1(more then 0) copy of the recipe already
+                    if (x.Quantity > 0)
+                    { // Adding the recipes details to the list
+                        recipes.Add((Recipe)x.Details);
+                    }
+                }
+            }
+            // If the player recipes has 0 items
+            if (recipes.Count == 0)
+            {
+                // The player doesn't have any recipes, so hide the recipe combobox and "Craft" button
+                cboRecipes.Visible = false;
+                // The player doesnt have any reicpes, so we hide the recipe button and "Craft" button
+                btnCraftItem.Visible = false;
+            }
+            else
+            {// Updates UI elements, makes the recipes appear in combobox
+                cboRecipes.SelectedIndexChanged -= cboRecipes_SelectedIndexChanged;
+                cboRecipes.DataSource = recipes;
+                cboRecipes.SelectedIndexChanged += cboRecipes_SelectedIndexChanged;
+                cboRecipes.DisplayMember = "Name";
+                cboRecipes.ValueMember = "ID";
+                // If the player has a current recipe
+                if (_player.CurrentRecipe != null)
+                {// Changing the current selected recipe UI
+                    cboRecipes.SelectedItem = _player.CurrentRecipe;
+                }
+                else
+                {// If nothing is currently selected nothing happens
+                    cboRecipes.SelectedIndex = 0;
+                }
+            }
+        }
+
 
         private void UpdatePotionListInUI()
         {
@@ -638,6 +684,71 @@ namespace SuperAdventure
             // update inventory list
             UpdateInventoryListInUI();
 
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCraftItem_Click(object sender, EventArgs e)
+        {
+            // If the players CurrentRecipe variable isnt empty
+            if (_player.CurrentRecipe != null)
+            {
+                // set the combo box in the UI to the players current recipe
+                cboRecipes.SelectedItem = _player.CurrentRecipe;
+            }
+            // otherwise
+            else
+            {
+                // leave it empty
+                cboRecipes.SelectedIndex = 0;
+            }
+
+            // Loop through the players recipe list
+            foreach (InventoryRecipe recipe in _player.Recipes.ToList())
+            {
+                // if the recipe is found that matches what the combobox says
+                // ex. Iron Sword
+                if (recipe.Details.Name == cboRecipes.Text)
+                {
+                    // then we are going to loop through the players invetory
+                    // to see if they have the required materials
+                    foreach (InventoryItem requiredItem in _player.Inventory.ToList())
+                    {
+                        // check to see if the player has the reuired Item
+                        // ex. iron scraps
+                        if (requiredItem.Details.ID == recipe.Details.RequiredItemID)
+                        {
+                            // check to see if the player has the required amount
+                            // of iron scraps
+                            if (requiredItem.Quantity >= recipe.Details.RequiredAmount)
+                            {
+                                // add the crafted item to the players inventory
+                                _player.AddItemToInventory((World.ItemByID(recipe.Details.CraftedItemID)));
+                                // subtract the reuired amount of items from the players inventory
+                                requiredItem.Quantity -= recipe.Details.RequiredAmount;
+                                // create a message in the UI letting the player know they 
+                                // have successully crafted the item
+                                rtbMessages.Text += Environment.NewLine + "You have successfully crafted: " + cboRecipes.Text + Environment.NewLine;
+                                ScrollToBottomOfMessages();
+                                // update all UI elements
+                                UpdateCraftingListInUI();
+                                UpdateWeaponListInUI();
+                                UpdatePotionListInUI();
+                                UpdateInventoryListInUI();
+                            }
+                            else
+                            {
+                                // otherwise tell them they dont have enough of the required item(s)
+                                rtbMessages.Text += Environment.NewLine + "you do not have enough items to make: " + cboRecipes.Text + Environment.NewLine;
+                                ScrollToBottomOfMessages();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
